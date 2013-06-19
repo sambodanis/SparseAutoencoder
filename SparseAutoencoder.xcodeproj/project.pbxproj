@@ -1,0 +1,215 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		66E671311772341000BC2C52 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E671301772341000BC2C52 /* main.cpp */; };
+		66E671331772341000BC2C52 /* SparseAutoencoder.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66E671321772341000BC2C52 /* SparseAutoencoder.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		66E6712A1772341000BC2C52 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				66E671331772341000BC2C52 /* SparseAutoencoder.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		66E6712C1772341000BC2C52 /* SparseAutoencoder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SparseAutoencoder; sourceTree = BUILT_PRODUCTS_DIR; };
+		66E671301772341000BC2C52 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		66E671321772341000BC2C52 /* SparseAutoencoder.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = SparseAutoencoder.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		66E671291772341000BC2C52 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		66E671211772341000BC2C52 = {
+			isa = PBXGroup;
+			children = (
+				66E6712F1772341000BC2C52 /* SparseAutoencoder */,
+				66E6712D1772341000BC2C52 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		66E6712D1772341000BC2C52 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				66E6712C1772341000BC2C52 /* SparseAutoencoder */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		66E6712F1772341000BC2C52 /* SparseAutoencoder */ = {
+			isa = PBXGroup;
+			children = (
+				66E671301772341000BC2C52 /* main.cpp */,
+				66E671321772341000BC2C52 /* SparseAutoencoder.1 */,
+			);
+			path = SparseAutoencoder;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		66E6712B1772341000BC2C52 /* SparseAutoencoder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66E671361772341000BC2C52 /* Build configuration list for PBXNativeTarget "SparseAutoencoder" */;
+			buildPhases = (
+				66E671281772341000BC2C52 /* Sources */,
+				66E671291772341000BC2C52 /* Frameworks */,
+				66E6712A1772341000BC2C52 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SparseAutoencoder;
+			productName = SparseAutoencoder;
+			productReference = 66E6712C1772341000BC2C52 /* SparseAutoencoder */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		66E671231772341000BC2C52 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Sam Bodanis";
+			};
+			buildConfigurationList = 66E671261772341000BC2C52 /* Build configuration list for PBXProject "SparseAutoencoder" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 66E671211772341000BC2C52;
+			productRefGroup = 66E6712D1772341000BC2C52 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				66E6712B1772341000BC2C52 /* SparseAutoencoder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		66E671281772341000BC2C52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66E671311772341000BC2C52 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		66E671341772341000BC2C52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		66E671351772341000BC2C52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		66E671371772341000BC2C52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		66E671381772341000BC2C52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		66E671261772341000BC2C52 /* Build configuration list for PBXProject "SparseAutoencoder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66E671341772341000BC2C52 /* Debug */,
+				66E671351772341000BC2C52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		66E671361772341000BC2C52 /* Build configuration list for PBXNativeTarget "SparseAutoencoder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66E671371772341000BC2C52 /* Debug */,
+				66E671381772341000BC2C52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 66E671231772341000BC2C52 /* Project object */;
+}
