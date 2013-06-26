@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6695ECD6177378A30032C0B5 /* NeuralNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6695ECD4177378A30032C0B5 /* NeuralNetwork.cpp */; };
 		66E671311772341000BC2C52 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E671301772341000BC2C52 /* main.cpp */; };
 		66E671331772341000BC2C52 /* SparseAutoencoder.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66E671321772341000BC2C52 /* SparseAutoencoder.1 */; };
 /* End PBXBuildFile section */
@@ -25,9 +26,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6610732D177509C00060D7A7 /* grayscale.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grayscale.txt; sourceTree = "<group>"; };
+		6695ECD4177378A30032C0B5 /* NeuralNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NeuralNetwork.cpp; sourceTree = "<group>"; };
+		6695ECD5177378A30032C0B5 /* NeuralNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeuralNetwork.h; sourceTree = "<group>"; };
+		66D4C28D177A3F9200C9B20A /* olsh.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = olsh.dat; sourceTree = "<group>"; };
 		66E6712C1772341000BC2C52 /* SparseAutoencoder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SparseAutoencoder; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E671301772341000BC2C52 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		66E671321772341000BC2C52 /* SparseAutoencoder.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = SparseAutoencoder.1; sourceTree = "<group>"; };
+		66E6713C1772989B00BC2C52 /* test_image_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_image_1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +67,11 @@
 			isa = PBXGroup;
 			children = (
 				66E671301772341000BC2C52 /* main.cpp */,
+				6695ECD4177378A30032C0B5 /* NeuralNetwork.cpp */,
+				6695ECD5177378A30032C0B5 /* NeuralNetwork.h */,
+				6610732D177509C00060D7A7 /* grayscale.txt */,
+				66E6713C1772989B00BC2C52 /* test_image_1.png */,
+				66D4C28D177A3F9200C9B20A /* olsh.dat */,
 				66E671321772341000BC2C52 /* SparseAutoencoder.1 */,
 			);
 			path = SparseAutoencoder;
@@ -118,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66E671311772341000BC2C52 /* main.cpp in Sources */,
+				6695ECD6177378A30032C0B5 /* NeuralNetwork.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +139,7 @@
 		66E671341772341000BC2C52 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -147,6 +159,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/usr/local\n";
+				LIBRARY_SEARCH_PATHS = "/usr/local\n";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -156,7 +170,7 @@
 		66E671351772341000BC2C52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -170,6 +184,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/usr/local\n";
+				LIBRARY_SEARCH_PATHS = "/usr/local\n";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
@@ -178,14 +194,20 @@
 		66E671371772341000BC2C52 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = "/usr/local/lib\n";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
 		66E671381772341000BC2C52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = "/usr/local/lib\n";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -208,6 +230,7 @@
 				66E671381772341000BC2C52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
