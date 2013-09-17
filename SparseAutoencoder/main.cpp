@@ -73,7 +73,7 @@ void test_numbers() {
 }
 
 void train_with_images(std::vector<matrix<double> > & images) {
-    int k_max = 10;
+    int k_max = 100;
     matrix<double> all_training_examples (k_max, 8 * 8);
     for (int k = 0; k < k_max; k++) {
         matrix<double> example = images[(int)arc4random() % images.size()];
@@ -86,7 +86,7 @@ void train_with_images(std::vector<matrix<double> > & images) {
     }
     std::vector<int> hidden_layer_sizes;
     hidden_layer_sizes.push_back(30);
-    NeuralNetwork net = NeuralNetwork(all_training_examples, all_training_examples, 100, hidden_layer_sizes, 0.1, 0.1, 1, true);
+    NeuralNetwork net = NeuralNetwork(all_training_examples, all_training_examples, 1000, hidden_layer_sizes, 0.002, 0.1, 5, true);
     net.train();
     
     

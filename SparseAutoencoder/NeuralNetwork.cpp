@@ -8,7 +8,10 @@
 
 #include "NeuralNetwork.h"
 
+
 const double epsilon_init = 0.12;
+const bool KL_SPARSITY = false;
+
 
 NeuralNetwork::NeuralNetwork(matrix<double> & training_data,
 				  			 matrix<double> & training_labels,
@@ -18,6 +21,7 @@ NeuralNetwork::NeuralNetwork(matrix<double> & training_data,
 				 			 double alpha,
 				 			 double beta,
                              bool sparse) {
+    sparsity_parameter_ = -0.996;
 	max_iterations_ = max_iterations;
 	lambda_ = lambda;
 	alpha_ = alpha;
@@ -86,18 +90,17 @@ double NeuralNetwork::compute_cost_squared_error() {
     double m = x_data_.size1();
     feed_forward();
     matrix<double> a3 = neuron_activations_.back();//[neuron_activations_.size() - 1];
-//    std::cout << a3.size1() << "," << a3.size2() << " -a3,y-   " << y_data_.size1() << "," << y_data_.size2() << std::endl;
-    
     matrix<double> norm_a3_minus_y = distance(a3, y_data_); // ||a3 - y|| TODO check this is the correct norm
     matrix<double> norm_a3_minus_y_squared = element_prod(norm_a3_minus_y, norm_a3_minus_y); // ||a3 - y||^2
-    
     matrix<double> first_sum = sum_columns_to_row_vector(norm_a3_minus_y_squared); // sum(||a3 - y||^2)
     first_sum *= 1.0 / m; // 1 / m * sum(||a3 - y||^2)
     matrix<double> first_sum_transpose = trans(first_sum);
     matrix<double> second_sum = sum_columns_to_row_vector(first_sum_transpose); // Might be an issue, sum(1 / m * sum(||a3 - y||^2))
     double cost = second_sum(0, 0) - regularize_cost();
-    return sparse_ ? cost + kullback_leibler_divergence() : cost;
-
+    if (KL_SPARSITY){
+        return sparse_ ? cost + kullback_leibler_divergence() : cost;
+    }
+    return cost;
 }
 
 double NeuralNetwork::kullback_leibler_divergence() {
@@ -105,8 +108,14 @@ double NeuralNetwork::kullback_leibler_divergence() {
     for (int j = 0; j < hidden_unit_average_activation_.size2(); j++) {
         double left = sparsity_parameter_ * log(sparsity_parameter_ / hidden_unit_average_activation_(0, j));
         double right = (1 - sparsity_parameter_) * log((1 - sparsity_parameter_) / (1 - hidden_unit_average_activation_(0, j)));
-        result += left + right;
+        if (left < 10e10 || left > -10e10) {
+            result += left;    
+        }
+        if (right < 10e10 || right > -10e10) {
+            result += right;
+        }
     }
+//    return 0;
     return beta_ * result;
 }
 
@@ -161,12 +170,15 @@ void NeuralNetwork::feed_forward() {
                 neuron_weights_[i] = prod(neuron_activations_[i - 1], trans(theta_[i - 1]));
                 matrix<double> sigmoid_activation = sigmoid(neuron_weights_[i]);
                 if (i == theta_.size()) neuron_activations_[i] = sigmoid_activation;
-                else neuron_activations_[i] = prepend_column(sigmoid_activation, 1);
+                else {
+                    matrix<double> bias = 
+                    neuron_activations_[i] = prepend_column(sigmoid_activation, 1);
+                }
             }
         }
-        if (sparse_ && i == hidden_layers_) {
-            hidden_unit_average_activation_ = sum_columns_to_row_vector(neuron_activations_[i]);
-            // TODO: might have to add the x^i thing in here.
+        if (sparse_ && i == hidden_layers_ && KL_SPARSITY) {
+            matrix<double> x_neur = prod(trans(x_data_), neuron_activations_[i]);
+            hidden_unit_average_activation_ = sum_columns_to_row_vector(x_neur);
         }
     }
 }
@@ -195,23 +207,25 @@ void NeuralNetwork::compute_gradients() {
             matrix<double> transpose_weights = trans(theta_[i]);            
             matrix<double> sigmoid_weights = sigmoid_gradient(neuron_weights_[i]);
             matrix<double> weights_times_delta = trans(prod(transpose_weights, previous_delta));
-//            if (sparse_ && i == hidden_layers_) {
-//                matrix<double> left_temp(hidden_unit_average_activation_.size1(), hidden_unit_average_activation_.size2(), -1 * sparsity_parameter_);
-//                matrix<double> left = element_div(left_temp, hidden_unit_average_activation_);
-//                matrix<double> right_temp(hidden_unit_average_activation_.size1(), hidden_unit_average_activation_.size2(), 1 - sparsity_parameter_);
-//                matrix<double> right = element_div(right_temp, scalar_minus_matrix(hidden_unit_average_activation_, 1));
-//                matrix<double> sparse_kl_divergence = beta_ * (left + right);
-//                for (int i = 0; i < weights_times_delta.size1(); i++) {
-//                    for (int j = 0; j < weights_times_delta.size2(); j++) {
-//                        weights_times_delta(i, j) -= sparse_kl_divergence(0, j);
-//                    }
-//                }
-//            }
+            if (sparse_ && i == hidden_layers_ && KL_SPARSITY) {
+                matrix<double> left_temp(hidden_unit_average_activation_.size1(), hidden_unit_average_activation_.size2(), -1 * sparsity_parameter_);
+                matrix<double> left = element_div(left_temp, hidden_unit_average_activation_);
+                matrix<double> right_temp(hidden_unit_average_activation_.size1(), hidden_unit_average_activation_.size2(), 1 - sparsity_parameter_);
+                matrix<double> right = element_div(right_temp, scalar_minus_matrix(hidden_unit_average_activation_, 1));
+                matrix<double> sparse_kl_divergence = beta_ * (left + right);
+                for (int i = 0; i < weights_times_delta.size1(); i++) {
+                    for (int j = 0; j < weights_times_delta.size2(); j++) {
+                        weights_times_delta(i, j) -= sparse_kl_divergence(0, j);
+                    }
+                }
+            } else if (sparse_ && i == hidden_layers_) {
+                
+            }
             matrix<double> new_delta = element_prod(remove_column(weights_times_delta, 0), sigmoid_weights);
             deltas.push_back(new_delta);
         }
     }
-//    debug_matrices(deltas);
+
     int activation_iterator = (int)deltas.size() - 1;
     for (int i = 0; i < deltas.size(); i++) {
         // TODO: seperate core and bias, operate then reconstruct. 
@@ -221,6 +235,7 @@ void NeuralNetwork::compute_gradients() {
         matrix<double> gradient = delta_activation;
         if (theta_grad_.size() < theta_.size()) theta_grad_.push_back(gradient);
         else theta_grad_[i] = gradient;
+        
     }
     std::reverse(theta_grad_.begin(), theta_grad_.end());
     regularize_gradients();
@@ -291,9 +306,14 @@ void NeuralNetwork::gradient_descent() {
         cost = compute_cost_squared_error();
         for (int i = 0; i < theta_.size(); i++) {
             theta_[i] = theta_[i] - alpha_ * theta_grad_[i];
+//            if (i == hidden_layers_ && sparse_ && !KL_SPARSITY && iteration > 1) {
+//                hidden_unit_average_activation_ = 0.999 * hidden_unit_average_activation_ + 0.001 * neuron_activations_[i];
+//                
+//            }
         }
-        row = row % theta_[0].size1();
-        col = col % theta_[0].size2();
+        
+//        row = row % theta_[0].size1();
+//        col = col % theta_[0].size2();
 //        std::cout << "Theta_1(" << row << "," << col << ") = " << theta_[0](row, col) << std::endl;
         std::cout << "Iteration   " << iteration << " | Cost: " << cost << std::endl;
     }
@@ -328,7 +348,7 @@ matrix<double> NeuralNetwork::distance(matrix<double> & mat_1, matrix<double> & 
     matrix<double> result (mat_1.size1(), mat_1.size2());
     for (int i = 0; i < mat_1.size1(); i++) {
         for (int j = 0; j < mat_1.size2(); j++) {
-            result(i, j) = pow(mat_1(i, j) - mat_2(i, j), 2);
+            result(i, j) = sqrt(pow(mat_1(i, j) - mat_2(i, j), 2));
         }
     }
     return result;
